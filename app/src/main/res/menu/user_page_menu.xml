@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".UserPage">
+
+    <item
+        android:id="@+id/action_edit"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom|withText"
+        android:title="Edit user" />
+
+    <item
+        android:id="@+id/action_save"
+        android:icon="@android:drawable/ic_menu_save"
+        android:orderInCategory="100"
+        android:visible="false"
+        app:showAsAction="ifRoom|withText"
+        android:title="Save user" />
+
+    <item
+        android:id="@+id/action_del"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom|withText"
+        android:title="Del user" />
+
+    <item
+        android:id="@+id/action_cancel"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom|withText"
+        android:title="Cancel" />
+
+</menu>
