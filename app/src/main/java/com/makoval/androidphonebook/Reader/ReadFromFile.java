@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.makoval.androidphonebook.Formatter.FormatUser;
 import com.makoval.androidphonebook.Formatter.UserList;
+
 import lombok.NoArgsConstructor;
 
 import java.io.BufferedReader;
@@ -16,6 +17,7 @@ import java.util.List;
 
 /**
  * Класс реализующий интерфейс IReader для записи в текстовый файл
+ *
  * @see IReader
  */
 @NoArgsConstructor
@@ -46,7 +48,7 @@ public class ReadFromFile implements IReader {
     public UserList read() throws IOException {
         StringBuilder builder = new StringBuilder();
         String data = null;
-        UserList userList;
+        UserList userList = new UserList();
 
         try {
             InputStream inputStream = context.openFileInput(pathFile);
@@ -65,10 +67,12 @@ public class ReadFromFile implements IReader {
             Log.e("Exception", "File read failed: " + e.toString());
         }
 
-        FormatUser formatUser = null;
-        List<String> dataUsers = Arrays.asList(builder.toString().split("\n"));
-        formatUser = new FormatUser(dataUsers);
-        userList = formatUser.format();
+        if (!builder.toString().equals("")) {
+            FormatUser formatUser = null;
+            List<String> dataUsers = Arrays.asList(builder.toString().split("\n"));
+            formatUser = new FormatUser(dataUsers);
+            userList = formatUser.format();
+        }
         return userList;
     }
 }

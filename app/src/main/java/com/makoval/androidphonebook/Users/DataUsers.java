@@ -7,10 +7,11 @@ import com.makoval.androidphonebook.Formatter.UserList;
  */
 public class DataUsers {
 
+
     /**
      * Список пользователей
      */
-    static UserList usersList = new UserList();
+    private static UserList usersList = new UserList();
 
     /**
      * @return Список пользователей
@@ -29,8 +30,19 @@ public class DataUsers {
     /**
      * @param user Пользователь
      */
-    public static void addUser(User user) {
+    public static void replaceUser(User user) {
         DataUsers.usersList.add(user);
+    }
+
+    /**
+     * Заменяет данные пользователя в списке по указаной позиции
+     *
+     * @param position Позиция пользователя в списке
+     * @param user     Новые данные пользователя
+     */
+    public static void replaceUser(int position, User user) {
+        DataUsers.usersList.remove(position);
+        DataUsers.usersList.add(position, user);
     }
 
     /**
@@ -45,5 +57,9 @@ public class DataUsers {
      */
     public static int getSize() {
         return usersList.size();
+    }
+
+    public static User getLastUser() {
+        return usersList.getLast();
     }
 }

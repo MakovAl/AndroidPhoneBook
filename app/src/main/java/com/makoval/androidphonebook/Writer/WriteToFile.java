@@ -1,10 +1,13 @@
 package com.makoval.androidphonebook.Writer;
 
 import android.content.Context;
+import android.content.Intent;
 
-import java.io.FileOutputStream;
+import com.makoval.androidphonebook.WriteHelper.Action.TXT.DelFromTXT;
+import com.makoval.androidphonebook.WriteHelper.Action.TXT.WriteToTXT;
+import com.makoval.androidphonebook.WriteHelper.WriteActionStore;
+
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 
 /**
  * Класс реализующий интерфейс
@@ -13,42 +16,39 @@ import java.io.OutputStreamWriter;
  */
 public class WriteToFile implements IWriter {
 
+
+    private final Context context;
     /**
      * Путь к файлу для записи
      */
     private final String pathFile;
-    /**
-     * Данные для записи в файл
-     */
-    private final String data;
-
-    private final Context context;
 
     /**
      * Конструктор задающий значение для полей
      *
      * @param pathFile Путь к файлу для записи
-     * @param data     Данные для записи в файл
      */
-    public WriteToFile(String pathFile, String data, Context context) {
+    public WriteToFile(String pathFile, Context context) {
         this.pathFile = pathFile;
-        this.data = data;
         this.context = context;
     }
 
     /**
-     * Метод интерфейса IWriter окрывающий файл для записи, записывающий данные и закрывающий файл.
+     * Метод интерфейса IWriter
+     * Устанавливает возможные дейсвия с файлом в WriteActionStore
+     * Получает из intent @action дейсвие которое нужно совершить.
+     * Получает из WriteActionStore класс соответсвуещего действия
      *
-     * @throws IOException Если при записи в файл что-то пошло не так, вызывается исключение
+     * @param intent намерения
+     * @throws IOException
      */
     @Override
-    public void write() throws IOException {
-        FileOutputStream fOut = context.openFileOutput(pathFile, Context.MODE_PRIVATE);
-        OutputStreamWriter osw = new OutputStreamWriter(fOut);
-
-        osw.write(data);
-
-        osw.flush();
-        osw.close();
+    public void write(Intent intent) throws IOException {
+        WriteActionStore was = new WriteActionStore();
+        was.addAction("add", new WriteToTXT(context, pathFile));
+        was.addAction("del", new DelFromTXT(context, pathFile,
+                intent.getIntExtra("@position", -1)));
+        was.addAction("edit", new WriteToTXT(context, pathFile));
+        was.getAction(intent.getStringExtra("@action")).write();
     }
 }
