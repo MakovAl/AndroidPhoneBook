@@ -5,19 +5,11 @@
     tools:context=".UserPage">
 
     <item
-        android:id="@+id/action_edit"
-        android:icon="@android:drawable/ic_menu_edit"
+        android:id="@+id/action_save"
+        android:icon="@android:drawable/ic_menu_save"
         android:orderInCategory="100"
         app:showAsAction="ifRoom|withText"
-        android:title="Edit user" />
-
-
-    <item
-        android:id="@+id/action_del"
-        android:icon="@android:drawable/ic_menu_delete"
-        android:orderInCategory="100"
-        app:showAsAction="ifRoom|withText"
-        android:title="Del user" />
+        android:title="Save user" />
 
     <item
         android:id="@+id/action_cancel"

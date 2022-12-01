@@ -13,6 +13,20 @@
         android:theme="@style/Theme.AndroidPhoneBook"
         tools:targetApi="31">
         <activity
+            android:name=".UserPage.EditManagerActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".UserPage.EditDeveloperActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".UserPage.AddManagerActivity"
             android:exported="false">
             <meta-data

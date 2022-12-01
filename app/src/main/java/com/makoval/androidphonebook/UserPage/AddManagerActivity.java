@@ -43,7 +43,7 @@ public class AddManagerActivity extends AppCompatActivity {
         String phone = ((EditText) findViewById(R.id.phone)).getText().toString();
         User newUser = new Manager(DataUsers.getSize() + 1, "manager", phone, address, name,
                 surname, position);
-        DataUsers.addUser(newUser);
+        DataUsers.replaceUser(newUser);
     }
 
 
@@ -73,5 +73,4 @@ public class AddManagerActivity extends AppCompatActivity {
                 return true;
         }
     }
-
 }
