@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import com.makoval.androidphonebook.WriteHelper.Action.TXT.DelFromTXT;
 import com.makoval.androidphonebook.WriteHelper.Action.TXT.WriteToTXT;
+import com.makoval.androidphonebook.WriteHelper.Action.TXT.WriteUserToTXT;
 import com.makoval.androidphonebook.WriteHelper.WriteActionStore;
 
 import java.io.IOException;
@@ -16,7 +17,9 @@ import java.io.IOException;
  */
 public class WriteToFile implements IWriter {
 
-
+    /**
+     * Контекст приложения
+     */
     private final Context context;
     /**
      * Путь к файлу для записи
@@ -44,11 +47,12 @@ public class WriteToFile implements IWriter {
      */
     @Override
     public void write(Intent intent) throws IOException {
+        int position = intent.getIntExtra("@position", -1);
         WriteActionStore was = new WriteActionStore();
         was.addAction("add", new WriteToTXT(context, pathFile));
-        was.addAction("del", new DelFromTXT(context, pathFile,
-                intent.getIntExtra("@position", -1)));
+        was.addAction("del", new DelFromTXT(context, pathFile, position));
         was.addAction("edit", new WriteToTXT(context, pathFile));
+        was.addAction("writeShareContact", new WriteUserToTXT(context, pathFile, position));
         was.getAction(intent.getStringExtra("@action")).write();
     }
 }

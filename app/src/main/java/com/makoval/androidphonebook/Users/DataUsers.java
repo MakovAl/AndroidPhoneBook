@@ -27,12 +27,6 @@ public class DataUsers {
         DataUsers.usersList = usersList;
     }
 
-    /**
-     * @param user Пользователь
-     */
-    public static void replaceUser(User user) {
-        DataUsers.usersList.add(user);
-    }
 
     /**
      * Заменяет данные пользователя в списке по указаной позиции
@@ -50,6 +44,13 @@ public class DataUsers {
      */
     public static void delUser(int position) {
         usersList.remove(position);
+    }
+
+    /**
+     * @param user Пользователь
+     */
+    public static void addUser(User user){
+        usersList.add(user);
     }
 
     /**

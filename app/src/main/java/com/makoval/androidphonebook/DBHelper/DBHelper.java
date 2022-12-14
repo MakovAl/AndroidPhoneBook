@@ -22,6 +22,11 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     @Override
+    public void onConfigure(SQLiteDatabase sqLiteDatabase) {
+        sqLiteDatabase.setForeignKeyConstraintsEnabled(true);
+    }
+
+    @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS users");
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS developers");

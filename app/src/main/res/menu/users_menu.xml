@@ -7,15 +7,15 @@
 
     <item
         android:id="@+id/action_add"
-        android:icon="@android:drawable/ic_menu_add"
+        android:icon="@drawable/ic_add"
         android:orderInCategory="100"
-        app:showAsAction="ifRoom|withText"
-        android:title="Add user" />
+        android:title="Add user"
+        app:showAsAction="ifRoom|withText" />
 
     <item
         android:id="@+id/action_cancel"
-        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        android:icon="@drawable/ic_cancel"
         android:orderInCategory="100"
-        app:showAsAction="ifRoom|withText"
-        android:title="Cancel" />
+        android:title="Cancel"
+        app:showAsAction="ifRoom|withText" />
 </menu>

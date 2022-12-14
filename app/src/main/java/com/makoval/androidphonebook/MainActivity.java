@@ -3,47 +3,23 @@ package com.makoval.androidphonebook;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.makoval.androidphonebook.Adapter.PhoneBookAdapter;
-import com.makoval.androidphonebook.DBHelper.DBHelper;
-import com.makoval.androidphonebook.Reader.IReader;
-import com.makoval.androidphonebook.Reader.ReadFromDB;
-import com.makoval.androidphonebook.Reader.ReadFromFile;
-import com.makoval.androidphonebook.Reader.ReadFromJson;
+import com.makoval.androidphonebook.Settings.SettingsActivity;
 import com.makoval.androidphonebook.UserPage.AddUserActivity;
 import com.makoval.androidphonebook.Users.DataUsers;
-import com.makoval.androidphonebook.Users.Developer;
 import com.makoval.androidphonebook.Users.IOUser;
-import com.makoval.androidphonebook.Users.Manager;
-import com.makoval.androidphonebook.Writer.IWriter;
-import com.makoval.androidphonebook.Writer.WriteToDB;
-import com.makoval.androidphonebook.Writer.WriteToFile;
-import com.makoval.androidphonebook.Writer.WriteToJson;
 
 import java.io.IOException;
 
+/**
+ * Основная активность выводящая список контактов
+ */
 public class MainActivity extends AppCompatActivity {
-
-
-    /**
-     * Получение данных для заполнения списка
-     */
-    private void readData() {
-        if (DataUsers.getUsersList().isEmpty()) {
-            try {
-                DataUsers.setUsersList(IOUser.getReader().read());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
 
     /**
      * Создает адаптер и устанавливает отображение для выведение списка пользователей
@@ -54,15 +30,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ListView mainList = (ListView) findViewById(R.id.main_list);
-
-        IOUser.setWriter(new WriteToDB(this));
-        IOUser.setReader(new ReadFromDB(this));
-
-        readData();
-
-        PhoneBookAdapter phoneAdapter = new PhoneBookAdapter(this, DataUsers.getUsersList());
-        mainList.setAdapter(phoneAdapter);
     }
 
 
@@ -74,6 +41,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        ListView mainList = (ListView) findViewById(R.id.main_list);
+        PhoneBookAdapter phoneAdapter = new PhoneBookAdapter(this, DataUsers.getUsersList());
+        mainList.setAdapter(phoneAdapter);
+
         Intent dataUser = getIntent();
         String actionUser = dataUser.getStringExtra("@action");
         if (actionUser != null && !actionUser.equals("cancel")) {
@@ -82,8 +54,8 @@ public class MainActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            dataUser.putExtra("@action", "cancel");
         }
-
     }
 
     @Override
@@ -105,9 +77,12 @@ public class MainActivity extends AppCompatActivity {
                 Intent addUserIntent = new Intent(getApplicationContext(), AddUserActivity.class);
                 startActivity(addUserIntent);
                 return true;
+            case R.id.action_settings:
+                Intent settingsIntent = new Intent(getApplicationContext(), SettingsActivity.class);
+                startActivity(settingsIntent);
+                return true;
             default:
                 return true;
         }
     }
-
 }

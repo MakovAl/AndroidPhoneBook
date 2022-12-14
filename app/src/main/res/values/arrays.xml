@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="listStorageMethods">
+        <item>Store in DB</item>
+        <item>Store in file</item>
+        <item>Store in json file</item>
+    </string-array>
+    <string-array name="listStorageMethodsValues">
+        <item>DB</item>
+        <item>File</item>
+        <item>Json</item>
+    </string-array>
+
+    <string-array name="listFormatsFilesSent">
+        <item>Send in file</item>
+        <item>Send in json file</item>
+    </string-array>
+    <string-array name="listFormatsFilesSentValues">
+        <item>File</item>
+        <item>Json</item>
+    </string-array>
+
+    <string-array name="listCallNotifications">
+        <item>Do not notify</item>
+        <item>Notify via calendar event</item>
+    </string-array>
+    <string-array name="listCallNotificationsValues">
+        <item>NotNotify</item>
+        <item>Calendar</item>
+    </string-array>
+
+</resources>
