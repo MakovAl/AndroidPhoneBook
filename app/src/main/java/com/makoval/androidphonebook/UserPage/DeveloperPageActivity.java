@@ -3,6 +3,7 @@ package com.makoval.androidphonebook.UserPage;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,7 +22,6 @@ import java.io.IOException;
  */
 public class DeveloperPageActivity extends AppCompatActivity {
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,9 +37,15 @@ public class DeveloperPageActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.address)).setText(dev.getAddress());
         ((TextView) findViewById(R.id.position)).setText(dev.getPosition());
         ((TextView) findViewById(R.id.programmingLanguages)).setText(dev.getProgrammingLanguages());
-        ((TextView) findViewById(R.id.phone)).setText(dev.getUserPhoneNumber());
-    }
 
+        TextView phone = ((TextView) findViewById(R.id.phone));
+        phone.setText(dev.getUserPhoneNumber());
+        phone.setOnClickListener(view -> {
+            Intent intent = new Intent(Intent.ACTION_CALL);
+            intent.setData(Uri.parse("tel:" + phone.getText().toString()));
+            startActivity(intent);
+        });
+    }
 
     /**
      * Выполнить соответсвующее действии с сохраннеными разработчика,

@@ -3,6 +3,7 @@ package com.makoval.androidphonebook.UserPage;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,8 +37,13 @@ public class ManagerPageActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.surname)).setText(manager.getSurname());
         ((TextView) findViewById(R.id.address)).setText(manager.getAddress());
         ((TextView) findViewById(R.id.position)).setText(manager.getPosition());
-        ((TextView) findViewById(R.id.phone)).setText(manager.getUserPhoneNumber());
-
+        TextView phone = ((TextView) findViewById(R.id.phone));
+        phone.setText(manager.getUserPhoneNumber());
+        phone.setOnClickListener(view -> {
+            Intent intent = new Intent(Intent.ACTION_CALL);
+            intent.setData(Uri.parse("tel:" + phone.getText().toString()));
+            startActivity(intent);
+        });
     }
 
 
@@ -84,12 +90,14 @@ public class ManagerPageActivity extends AppCompatActivity {
                 Intent editManager = new Intent(getApplicationContext(), EditManagerActivity.class);
                 editManager.putExtra("@position", dataManager.getIntExtra("@position", -1));
                 startActivity(editManager);
+                finish();
                 return true;
             case R.id.action_del:
                 Intent delDeveloper = new Intent(getApplicationContext(), MainActivity.class);
                 delDeveloper.putExtra("@action", "del");
                 delDeveloper.putExtra("@position", dataManager.getIntExtra("@position", -1));
                 startActivity(delDeveloper);
+                finish();
                 return true;
             case R.id.action_cancel:
                 Intent cancelManager = new Intent(getApplicationContext(), MainActivity.class);

@@ -44,7 +44,7 @@ public class AddDeveloperActivity extends AppCompatActivity {
         String programmingLanguages = ((EditText) findViewById(R.id.programmingLanguages)).getText().toString();
         User newUser = new Developer(DataUsers.getSize() + 1, "developer", phone, address, name,
                 surname, position, programmingLanguages);
-        DataUsers.replaceUser(newUser);
+        DataUsers.addUser(newUser);
     }
 
 

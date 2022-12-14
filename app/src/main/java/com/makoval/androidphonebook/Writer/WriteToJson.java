@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import com.makoval.androidphonebook.WriteHelper.Action.JSON.DelFromJSON;
 import com.makoval.androidphonebook.WriteHelper.Action.JSON.WriteToJSON;
+import com.makoval.androidphonebook.WriteHelper.Action.JSON.WriteUserToJSON;
 import com.makoval.androidphonebook.WriteHelper.WriteActionStore;
 
 import java.io.IOException;
@@ -26,7 +27,7 @@ public class WriteToJson implements IWriter {
      */
     String path;
 
-    public WriteToJson(Context context, String path) {
+    public WriteToJson(String path, Context context) {
         this.path = path;
         this.context = context;
     }
@@ -43,11 +44,12 @@ public class WriteToJson implements IWriter {
      */
     @Override
     public void write(Intent intent) throws IOException {
+        int position = intent.getIntExtra("@position", -1);
         WriteActionStore was = new WriteActionStore();
         was.addAction("add", new WriteToJSON(context, path));
-        was.addAction("del", new DelFromJSON(context, path,
-                intent.getIntExtra("@position", -1)));
+        was.addAction("del", new DelFromJSON(context, path, position));
         was.addAction("edit", new WriteToJSON(context, path));
+        was.addAction("writeShareContact", new WriteUserToJSON(context, path, position));
         was.getAction(intent.getStringExtra("@action")).write();
     }
 }

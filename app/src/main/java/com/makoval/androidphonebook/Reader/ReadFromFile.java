@@ -1,6 +1,9 @@
 package com.makoval.androidphonebook.Reader;
 
+import static androidx.core.content.FileProvider.getUriForFile;
+
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 
 import com.makoval.androidphonebook.Formatter.FormatUser;
@@ -9,6 +12,7 @@ import com.makoval.androidphonebook.Formatter.UserList;
 import lombok.NoArgsConstructor;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -24,17 +28,35 @@ import java.util.List;
 public class ReadFromFile implements IReader {
 
     /**
-     * Путь к файлу для чтения
-     */
-    private String pathFile;
-
-    /**
      * Контекст приложения
      */
     private Context context;
 
+
+    /**
+     * Uri файла
+     */
+    Uri uriFile;
+
+    /**
+     * Конструктор принимающий строку к файлу и преобразующий в uri
+     *
+     * @param pathFile Путь к файлу
+     * @param context  Контекст
+     */
     public ReadFromFile(String pathFile, Context context) {
-        this.pathFile = pathFile;
+        this.uriFile = getUriForFile(context,
+                "com.makoval.androidphonebook.provider",
+                new File(context.getFilesDir(), pathFile));
+        this.context = context;
+    }
+
+    /**
+     * @param uriFile Uri файла
+     * @param context Контекст
+     */
+    public ReadFromFile(Uri uriFile, Context context) {
+        this.uriFile = uriFile;
         this.context = context;
     }
 
@@ -51,7 +73,7 @@ public class ReadFromFile implements IReader {
         UserList userList = new UserList();
 
         try {
-            InputStream inputStream = context.openFileInput(pathFile);
+            InputStream inputStream = context.getContentResolver().openInputStream(uriFile);
 
             if (inputStream != null) {
                 InputStreamReader isr = new InputStreamReader(inputStream);
